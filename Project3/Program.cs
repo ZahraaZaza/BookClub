@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity.Infrastructure;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -24,12 +25,12 @@ namespace Project3
         {
            // int i = 0;
             List<Book> bookList = new List<Book>();
-            var authors = from book in booksXml.Descendants("book")
+            var authors = (from book in booksXml.Descendants("book")
                           select new Author
                           {
                               FirstName = book.Element("author").Attribute("firstName")?.Value,
                               LastName = book.Element("author").Attribute("lastName")?.Value,
-                          };         
+                          }).ToList();         
          
             var anonBooks = (from book in booksXml.Descendants("book")
                          select new
@@ -41,6 +42,8 @@ namespace Project3
                             AuthorLast = book.Element("author").Attribute("lastName")?.Value
                          });
 
+            //Our authors have no books, but our books have authors which is an issue!!
+            //So we add the books instead of the authors and it works
             foreach (var anonBook in anonBooks)
             {
                 Author author = authors.Where(a => a.FirstName == anonBook.AuthorFirst
@@ -51,7 +54,7 @@ namespace Project3
                     Title = anonBook.Title,
                     Description = anonBook.Description
                 };
-             
+               // book.Authors.Add(author);
                 author.Books.Add(book);
                 bookList.Add(book);
 
@@ -69,18 +72,56 @@ namespace Project3
 
             Console.ReadKey();
             */
+
+
             using (var db = new BooksReviewsDB())
             {
-                
+                foreach (var item in authors)
+                {
+                    try
+                    {
+                        Console.WriteLine(item.FirstName + "\t" + item.LastName);
+                        db.Authors.Add(item);
+                        db.SaveChanges(); 
+
+                    }
+                    catch (DbUpdateException e)
+                    {
+                        db.Authors.Remove(item);
+                    }
+                }
             }
-           
-           /* foreach (var author in authors)
-            {
-                Console.WriteLine("id " + i);
-                Console.WriteLine(author.firstname + " " + author.lastname);
-                i++;
-            }
+
+
+            /*             This adds the books into the database and the authors will be added in by virtue of the first process
+                        using (var db = new BooksReviewsDB())
+                        {
+                            foreach (var item in bookList)
+                            {
+                                try
+                                {
+                                    Console.WriteLine(item.Title + "\t" + item.Authors.First().FirstName);
+                                    db.Books.Add(item);
+                                    db.SaveChanges();
+
+                                }
+                                catch (DbUpdateException e)
+                                {
+                                    db.Books.Remove(item);
+                                }
+                            }
+                        }
+
             */
+
+
+            /* foreach (var author in authors)
+             {
+                 Console.WriteLine("id " + i);
+                 Console.WriteLine(author.firstname + " " + author.lastname);
+                 i++;
+             }
+             */
 
             /*foreach (var book in anonBooks)
             {
@@ -94,7 +135,7 @@ namespace Project3
 
             }
             Console.ReadKey();
-            */  
+            */
 
             var users = from review in ratingsXml.Descendants("user")
                           select new
