@@ -51,7 +51,7 @@ namespace Project3
 
                 Book book = new Book
                 {
-                    BookId = int.Parse(anonBook.BookId),
+                    //BookId = int.Parse(anonBook.BookId),
                     Title = anonBook.Title,
                     Description = anonBook.Description
                 };
@@ -72,16 +72,16 @@ namespace Project3
             Console.ReadKey();
             */
 
-            /*
-            using (var db = new BooksReviewsDB())
+            
+           /* using (var db = new BooksReviewsDB())
             {
                 foreach (var item in authors)
                 {
                     try
                     {
-                        Console.WriteLine(item.FirstName + "\t" + item.LastName);
+                        //Console.WriteLine(item.FirstName + "\t" + item.LastName);
                         db.Authors.Add(item);
-                        db.SaveChanges(); 
+                        //db.SaveChanges(); 
 
                     }
                     catch (DbUpdateException e)
@@ -89,7 +89,7 @@ namespace Project3
                         db.Authors.Remove(item);
                     }
                 }
-            }
+            }*/
 
 
             /* foreach (var author in authors)
@@ -114,15 +114,64 @@ namespace Project3
             Console.ReadKey();
             */
 
-            var users = (from review in ratingsXml.Descendants("user")
-                          select new User
-                          {
-                              Username = review.Attribute("userId")?.Value,
-                              Password = review.Attribute("userId")?.Value,
-                              FirstName = review.Attribute("userId")?.Value,
-                              LastName = review.Attribute("lastName").Value ?? "Reader",
-                              Country = "CAN"
-                          }).ToList();
+            var users = from u in ratingsXml.Descendants("user")
+                         select u;
+            List<User> userList = new List<User>();
+            foreach(var u in users)
+            {
+                User newUser = new User
+                {
+                    Username = u.Attribute("userId")?.Value,
+                    Password = u.Attribute("userId")?.Value,
+                    FirstName = u.Attribute("userId")?.Value,
+                    LastName = u.Attribute("lastName").Value ?? "Reader",
+                    Country = "CAN"
+                    
+                };
+                userList.Add(newUser);
+                foreach(var r in u.Descendants("review"))
+                {
+                    Review rev = new Review
+                    {
+                        UserName = r.Parent.Attribute("userId").Value,
+                        BookId = Int32.Parse(r.Attribute("bookId").Value),
+                        Rating = Int32.Parse(r.Attribute("rating")?.Value),
+                        Book = bookList[Int32.Parse(r.Attribute("bookId").Value)]//.Where(x => x.BookId == Int32.Parse(r.Attribute("bookId").Value)).FirstOrDefault()
+                        
+                    };
+                    newUser.Reviews.Add(rev);
+                }
+
+            }
+
+
+
+            using (var db = new BooksReviewsDB())
+            {
+                foreach (var item in authors)
+                {
+                    try
+                    {
+                        //Console.WriteLine(item.FirstName + "\t" + item.LastName);
+                        db.Authors.Add(item);
+                        db.SaveChanges(); 
+
+                    }
+                    catch (DbUpdateException e)
+                    {
+                        db.Authors.Remove(item);
+                    }
+                }
+                db.Users.AddRange(userList);
+                db.SaveChanges(); 
+            }
+            /*Username = review.Attribute("userId")?.Value,
+            Password = review.Attribute("userId")?.Value,
+            FirstName = review.Attribute("userId")?.Value,
+            LastName = review.Attribute("lastName").Value ?? "Reader",
+            Country = "CAN"
+
+        }).ToList();*/
             /*
             foreach(var user in users)
             {
@@ -133,7 +182,7 @@ namespace Project3
             Console.ReadKey();
             */
             //List<Review> rev = new List<Review>();
-            IEnumerable<XElement> xRating = ratingsXml.Descendants("user");
+            /*IEnumerable<XElement> xRating = ratingsXml.Descendants("user");
             var ratings = xRating.Descendants().Where(x => x.Attribute("rating") != null);
             var reviews = (from review in ratings
                            select new Review
@@ -141,19 +190,19 @@ namespace Project3
                               UserName = review.Parent.Attribute("userId").Value,
                               BookId = Int32.Parse(review.Attribute("bookId").Value),      
                               Rating = Int32.Parse(review.Attribute("rating")?.Value)
-                          }).ToList();
+                          }).ToList();*/
             /*
             foreach (var r in reviews)
             {
                 Console.WriteLine(r.UserName + " " + r.BookId + " " + r.Rating);
             }*/
-            foreach(var b in bookList)
+           /* foreach(var b in bookList)
             {
                 foreach (var r in reviews)
                 {
                     if (b.BookId == r.BookId)
                     {
-                        Console.WriteLine(b.BookId);
+                        Console.WriteLine(b.BookId);*/
                         /*
                         User user = users.Where(x => x.Username == r.UserName).FirstOrDefault();
 
@@ -190,8 +239,8 @@ namespace Project3
              Console.ReadKey();
 
      */
-        }
-        public static void createReviews(XElement booksXml, XElement ratingsXml)
+        
+       /* public static void createReviews(XElement booksXml, XElement ratingsXml)
         {
             IEnumerable<XElement> xRating = ratingsXml.Descendants("user");
             var ratings = xRating.Descendants().Where(x => x.Attribute("rating") != null);
@@ -211,5 +260,5 @@ namespace Project3
             }
             Console.ReadKey();
         }
-    }
-}
+    }*/
+//}
