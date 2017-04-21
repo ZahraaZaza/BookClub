@@ -1,4 +1,4 @@
-﻿// T4 code generation is enabled for model 'I:\Winter 2017\C#\Project 3\Project3\Project3\BooksReviews.edmx'. 
+﻿// T4 code generation is enabled for model 'C:\Users\1010290\Source\Repos\BookClub\Project3\BooksReviews.edmx'. 
 // To enable legacy code generation, change the value of the 'Code Generation Strategy' designer
 // property to 'Legacy ObjectContext'. This property is available in the Properties Window when the model
 // is open in the designer.

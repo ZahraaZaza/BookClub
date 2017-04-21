@@ -17,7 +17,7 @@ namespace Project3
             XElement ratingsXml = XElement.Load("ratings.xml");
             createAuthors(booksXml, ratingsXml);
             //createBooks(booksXml);
-            //createReviews(booksXml, ratingsXml);
+           // createReviews(booksXml, ratingsXml);
             //createUsers(ratingsXml);
         }
 
@@ -51,14 +51,13 @@ namespace Project3
 
                 Book book = new Book
                 {
+                    BookId = int.Parse(anonBook.BookId),
                     Title = anonBook.Title,
                     Description = anonBook.Description
                 };
-               // book.Authors.Add(author);
+                //book.Authors.Add(author);
                 author.Books.Add(book);
                 bookList.Add(book);
-
-
             }
             /*
             // for testing purposes 
@@ -73,7 +72,7 @@ namespace Project3
             Console.ReadKey();
             */
 
-
+            /*
             using (var db = new BooksReviewsDB())
             {
                 foreach (var item in authors)
@@ -91,28 +90,6 @@ namespace Project3
                     }
                 }
             }
-
-
-            /*             This adds the books into the database and the authors will be added in by virtue of the first process
-                        using (var db = new BooksReviewsDB())
-                        {
-                            foreach (var item in bookList)
-                            {
-                                try
-                                {
-                                    Console.WriteLine(item.Title + "\t" + item.Authors.First().FirstName);
-                                    db.Books.Add(item);
-                                    db.SaveChanges();
-
-                                }
-                                catch (DbUpdateException e)
-                                {
-                                    db.Books.Remove(item);
-                                }
-                            }
-                        }
-
-            */
 
 
             /* foreach (var author in authors)
@@ -137,15 +114,15 @@ namespace Project3
             Console.ReadKey();
             */
 
-            var users = from review in ratingsXml.Descendants("user")
-                          select new
+            var users = (from review in ratingsXml.Descendants("user")
+                          select new User
                           {
-                              UserName = review.Attribute("userId")?.Value,
+                              Username = review.Attribute("userId")?.Value,
                               Password = review.Attribute("userId")?.Value,
                               FirstName = review.Attribute("userId")?.Value,
                               LastName = review.Attribute("lastName").Value ?? "Reader",
                               Country = "CAN"
-                          };
+                          }).ToList();
             /*
             foreach(var user in users)
             {
@@ -155,37 +132,75 @@ namespace Project3
             }
             Console.ReadKey();
             */
-
-            var reviews = from review in ratingsXml.Descendants("user")
-                          select new Review
+            //List<Review> rev = new List<Review>();
+            IEnumerable<XElement> xRating = ratingsXml.Descendants("user");
+            var ratings = xRating.Descendants().Where(x => x.Attribute("rating") != null);
+            var reviews = (from review in ratings
+                           select new Review
                           {
-                              BookId = int.Parse(review.Element("review").Attribute("bookId").Value),
-                              UserName = review.Attribute("userId").Value,
-                              Rating = int.Parse(review.Element("review").Attribute("rating").Value)
-                             // BookTitle = bookList[int.Parse(review.Element("review").Attribute("bookId").Value)],
-                            
-                          };
-
-           /* foreach (var review in reviews)
+                              UserName = review.Parent.Attribute("userId").Value,
+                              BookId = Int32.Parse(review.Attribute("bookId").Value),      
+                              Rating = Int32.Parse(review.Attribute("rating")?.Value)
+                          }).ToList();
+            /*
+            foreach (var r in reviews)
             {
-                Console.WriteLine("user:\t" + review.UserId);
-                Console.WriteLine("book id:\t" + review.BookId);
-                Console.WriteLine("Book object:\t" + review.BookTitle.Title);
-                //Console.WriteLine("title:\t" + bookList[int.Parse(review.BookId)].Title);
-                Console.WriteLine("Rating:\t" + review.Rating + "\n");
-            }
-            Console.ReadKey();
+                Console.WriteLine(r.UserName + " " + r.BookId + " " + r.Rating);
+            }*/
+            foreach(var b in bookList)
+            {
+                foreach (var r in reviews)
+                {
+                    if (b.BookId == r.BookId)
+                    {
+                        Console.WriteLine(b.BookId);
+                        /*
+                        User user = users.Where(x => x.Username == r.UserName).FirstOrDefault();
 
-    */
+                        Review review = new Review();
+                        review.BookId = r.BookId;
+                        review.UserName = r.UserName;
+                        review.Rating = r.Rating;
+                        review.Content = "";
+
+                        user.Reviews.Add(review);
+
+                        Console.WriteLine(user.FirstName + " " + review.UserName);
+                        //rev.Add(review);*/
+                    }
+                }
+                //Console.WriteLine(b.Reviews);
+               // Console.ReadKey();
+            }
+            /*
+            using (var db = new BooksReviewsDB())
+            {
+                  db.Users.AddRange(users);
+                  db.SaveChanges();               
+            }
+            
+            /* foreach (var review in reviews)
+             {
+                 Console.WriteLine("user:\t" + review.UserId);
+                 Console.WriteLine("book id:\t" + review.BookId);
+                 Console.WriteLine("Book object:\t" + review.BookTitle.Title);
+                 //Console.WriteLine("title:\t" + bookList[int.Parse(review.BookId)].Title);
+                 Console.WriteLine("Rating:\t" + review.Rating + "\n");
+             }
+             Console.ReadKey();
+
+     */
         }
         public static void createReviews(XElement booksXml, XElement ratingsXml)
         {
-            var reviews = from review in ratingsXml.Descendants("user")
+            IEnumerable<XElement> xRating = ratingsXml.Descendants("user");
+            var ratings = xRating.Descendants().Where(x => x.Attribute("rating") != null);
+            var reviews = from review in ratings
                           select new
                           {
-                              UserId = review.Attribute("userId").Value,
-                              BookId = review.Element("review").Attribute("bookId").Value,      
-                              Rating = review.Element("review").Attribute("rating").Value
+                              UserId = review.Parent.Attribute("userId").Value,
+                              BookId = review.Attribute("bookId").Value,      
+                              Rating = review.Attribute("rating")?.Value
                           };
            
             foreach(var review in reviews)
