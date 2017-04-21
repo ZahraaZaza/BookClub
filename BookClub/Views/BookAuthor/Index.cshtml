@@ -1,7 +1,16 @@
-﻿
+﻿@model List<BookClub.Models.Book>
+
 @{
     ViewBag.Title = "Book Club - Books and Authors";
 }
 
+
 <h2>Books and Authors</h2>
+
+@foreach (var book in Model)
+{
+    <div>
+        <div> Book title:  @Html.ActionLink(book.Title, "Details", new { id = book.BookId })  </div>
+    </div>
+}
 
