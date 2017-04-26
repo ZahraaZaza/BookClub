@@ -32,21 +32,31 @@ namespace BookClub.Controllers
             using (var db = new BooksAuthorsDB())
             {
                 var bookInfo = (from Book in db.Books
-                                    where Book.BookId.Equals(someID)
-                                    select Book).ToList<Book>();
-              
+                                where Book.BookId.Equals(someID)
+                                select Book).FirstOrDefault();
 
-                var bookAuthor = (from Author in db.Authors
-                                  where Author.Books.Contains(bookInfo.FirstOrDefault())
-                                  select Author).FirstOrDefault();
-                                  
-                ViewBag.BookTitle = bookInfo.FirstOrDefault().Title;
+
+                /*  var bookAuthor = (from Author in db.Authors
+                                    where Author.Books.Contains(bookInfo.FirstOrDefault())
+                                    select Author).FirstOrDefault();
+                                    */
+                var reviews = (from Review in db.Reviews
+                               where Review.BookId.Equals(someID)
+                               select Review).ToList<Review>();
+
+                                
+              /*  ViewBag.BookTitle = bookInfo.FirstOrDefault().Title;
                 ViewBag.BookDescription = bookInfo.FirstOrDefault().Description;
                 ViewBag.BookReview = bookInfo.FirstOrDefault().Reviews;
+                */
+                //  ViewBag.BookAuthor = bookAuthor.FirstName + " " + bookAuthor.LastName;
 
-                ViewBag.BookAuthor = bookAuthor.FirstName + " " + bookAuthor.LastName;
 
-                return View(someID);
+                
+                // we are not getting any reviews from the book table 
+           
+               
+                return View(bookInfo);
             }
         }
     }

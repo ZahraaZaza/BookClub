@@ -1,14 +1,18 @@
-﻿@model int
+﻿@model  BookClub.Models.Book
 @{
     ViewBag.Title = "Book Details";
 }
 
 <h2>Book Details</h2>
 
+<div id="bookInfo">
+    <div>Book Title: @Model.Title </div>
+    <div>Book Author:  </div> 
+    <div>Book Description: @Model.Description</div>
+</div>
 
-<div>
-    <div>Book Title: @ViewBag.BookTitle </div>
-    <div>Book Author: @ViewBag.BookAuthor </div> 
-    <div>Book Description: @ViewBag.BookDescription</div>
-    <div>Book Review: @ViewBag.BookReview</div>
+<h2> Reviews </h2>
+
+<div id="reviewInfo">
+      
 </div>
