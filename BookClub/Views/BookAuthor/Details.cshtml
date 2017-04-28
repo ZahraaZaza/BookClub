@@ -20,7 +20,23 @@
 <div id="reviewInfo">
     @foreach (var item in Model.Reviews)
     {
+        int rating = 0;
+
+        switch (item.Rating) {
+            case -5: rating = 1;
+                break;
+            case -3: rating = 2;
+                break;
+            case 0: rating = 3;
+                break;
+            case 3: rating = 4;
+                break;
+            case 5: rating = 5;
+                break;
+
+        }
+
         <div>User: @item.UserName </div>
-        <div>Rating: @item.Rating</div>
+        <div>Rating: @rating</div>
     }
 </div>
