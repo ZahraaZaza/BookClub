@@ -33,31 +33,8 @@ namespace BookClub.Controllers
                 Book bookInfo = (from Book in db.Books.Include("Reviews").Include("Authors")
                                  where Book.BookId.Equals(someID)
                                 select Book).FirstOrDefault();
-
-
-                /*  var bookAuthor = (from Author in db.Authors
-                                    where Author.Books.Contains(bookInfo.FirstOrDefault())
-                                    select Author).FirstOrDefault();
-                                    */
-                
-
-                /*foreach(var review in reviews)
-                {
-                    bookInfo.Reviews.Add(review);
-                }*/
-                
-                                
-              /*  ViewBag.BookTitle = bookInfo.FirstOrDefault().Title;
-                ViewBag.BookDescription = bookInfo.FirstOrDefault().Description;
-                ViewBag.BookReview = bookInfo.FirstOrDefault().Reviews;
-                */
-                //  ViewBag.BookAuthor = bookAuthor.FirstName + " " + bookAuthor.LastName;
-
-
-                
-                // we are not getting any reviews from the book table 
-           
-               
+                bookInfo.Views += 1;
+                db.SaveChanges();
                 return View(bookInfo);
             }
         }
