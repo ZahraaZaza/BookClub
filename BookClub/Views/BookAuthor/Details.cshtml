@@ -7,12 +7,20 @@
 
 <div id="bookInfo">
     <div>Book Title: @Model.Title </div>
-    <div>Book Author:  </div> 
+    @foreach (var item in Model.Authors)//Foreach is useless since each book only has 1 author
+    {
+        <div>Book Author: @item.FirstName @item.LastName </div>
+    }
+    
     <div>Book Description: @Model.Description</div>
 </div>
 
 <h2> Reviews </h2>
 
 <div id="reviewInfo">
-      
+    @foreach (var item in Model.Reviews)
+    {
+        <div>User: @item.UserName </div>
+        <div>Rating: @item.Rating</div>
+    }
 </div>

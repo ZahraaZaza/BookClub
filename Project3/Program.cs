@@ -59,60 +59,7 @@ namespace Project3
                 author.Books.Add(book);
                 bookList.Add(book);
             }
-            /*
-            // for testing purposes 
-            int i = 0;
-            foreach(var book in bookList)
-            {
-                Console.WriteLine("i "+ i);
-                Console.WriteLine(book.BookId);
-                i++;
-            }
-
-            Console.ReadKey();
-            */
-
-            
-           /* using (var db = new BooksReviewsDB())
-            {
-                foreach (var item in authors)
-                {
-                    try
-                    {
-                        //Console.WriteLine(item.FirstName + "\t" + item.LastName);
-                        db.Authors.Add(item);
-                        //db.SaveChanges(); 
-
-                    }
-                    catch (DbUpdateException e)
-                    {
-                        db.Authors.Remove(item);
-                    }
-                }
-            }*/
-
-
-            /* foreach (var author in authors)
-             {
-                 Console.WriteLine("id " + i);
-                 Console.WriteLine(author.firstname + " " + author.lastname);
-                 i++;
-             }
-             */
-
-            /*foreach (var book in anonBooks)
-            {
-                //  Console.WriteLine("id " + book.BookId);
-                Console.WriteLine("id\t" + i);
-                Console.WriteLine("Title:\t" + book.Title);
-                Console.WriteLine("Description:\t" + book.Description);
-                //??
-                Console.WriteLine("Author:\t" + book.AuthorFirst + " " + book.AuthorLast + "\n");
-                i++;
-
-            }
-            Console.ReadKey();
-            */
+           
 
             var users = from u in ratingsXml.Descendants("user")
                          select u;
@@ -140,6 +87,7 @@ namespace Project3
                         
                     };
                     newUser.Reviews.Add(rev);
+                    //rev.Add(review);
                 }
 
             }
@@ -165,100 +113,9 @@ namespace Project3
                 db.Users.AddRange(userList);
                 db.SaveChanges(); 
             }
-            /*Username = review.Attribute("userId")?.Value,
-            Password = review.Attribute("userId")?.Value,
-            FirstName = review.Attribute("userId")?.Value,
-            LastName = review.Attribute("lastName").Value ?? "Reader",
-            Country = "CAN"
-
-        }).ToList();*/
-            /*
-            foreach(var user in users)
-            {
-                Console.WriteLine("userID:\t" + user.UserName + "\npassword:\t" + user.Password);
-                Console.WriteLine("First Name:\t" + user.FirstName + "\nLast Name:\t" + user.LastName);
-                Console.WriteLine("Country:\t" + user.Country + "\n");
-            }
-            Console.ReadKey();
-            */
-            //List<Review> rev = new List<Review>();
-            /*IEnumerable<XElement> xRating = ratingsXml.Descendants("user");
-            var ratings = xRating.Descendants().Where(x => x.Attribute("rating") != null);
-            var reviews = (from review in ratings
-                           select new Review
-                          {
-                              UserName = review.Parent.Attribute("userId").Value,
-                              BookId = Int32.Parse(review.Attribute("bookId").Value),      
-                              Rating = Int32.Parse(review.Attribute("rating")?.Value)
-                          }).ToList();*/
-            /*
-            foreach (var r in reviews)
-            {
-                Console.WriteLine(r.UserName + " " + r.BookId + " " + r.Rating);
-            }*/
-           /* foreach(var b in bookList)
-            {
-                foreach (var r in reviews)
-                {
-                    if (b.BookId == r.BookId)
-                    {
-                        Console.WriteLine(b.BookId);*/
-                        /*
-                        User user = users.Where(x => x.Username == r.UserName).FirstOrDefault();
-
-                        Review review = new Review();
-                        review.BookId = r.BookId;
-                        review.UserName = r.UserName;
-                        review.Rating = r.Rating;
-                        review.Content = "";
-
-                        user.Reviews.Add(review);
-
-                        Console.WriteLine(user.FirstName + " " + review.UserName);
-                        //rev.Add(review);*/
+         
                     }
                 }
-                //Console.WriteLine(b.Reviews);
-               // Console.ReadKey();
-            }
-            /*
-            using (var db = new BooksReviewsDB())
-            {
-                  db.Users.AddRange(users);
-                  db.SaveChanges();               
+               
             }
             
-            /* foreach (var review in reviews)
-             {
-                 Console.WriteLine("user:\t" + review.UserId);
-                 Console.WriteLine("book id:\t" + review.BookId);
-                 Console.WriteLine("Book object:\t" + review.BookTitle.Title);
-                 //Console.WriteLine("title:\t" + bookList[int.Parse(review.BookId)].Title);
-                 Console.WriteLine("Rating:\t" + review.Rating + "\n");
-             }
-             Console.ReadKey();
-
-     */
-        
-       /* public static void createReviews(XElement booksXml, XElement ratingsXml)
-        {
-            IEnumerable<XElement> xRating = ratingsXml.Descendants("user");
-            var ratings = xRating.Descendants().Where(x => x.Attribute("rating") != null);
-            var reviews = from review in ratings
-                          select new
-                          {
-                              UserId = review.Parent.Attribute("userId").Value,
-                              BookId = review.Attribute("bookId").Value,      
-                              Rating = review.Attribute("rating")?.Value
-                          };
-           
-            foreach(var review in reviews)
-            {
-                Console.WriteLine("user:\t" + review.UserId);
-                Console.WriteLine("book id:\t" + review.BookId);
-                Console.WriteLine("Rating:\t" + review.Rating + "\n");
-            }
-            Console.ReadKey();
-        }
-    }*/
-//}

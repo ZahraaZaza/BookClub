@@ -23,7 +23,6 @@ namespace BookClub.Controllers
         }
         public ActionResult Details(int? id = 0)
         {
-
             int someID = 0;
 
             if (id.HasValue)
@@ -31,8 +30,8 @@ namespace BookClub.Controllers
 
             using (var db = new BooksAuthorsDB())
             {
-                var bookInfo = (from Book in db.Books
-                                where Book.BookId.Equals(someID)
+                Book bookInfo = (from Book in db.Books.Include("Reviews").Include("Authors")
+                                 where Book.BookId.Equals(someID)
                                 select Book).FirstOrDefault();
 
 
@@ -40,10 +39,13 @@ namespace BookClub.Controllers
                                     where Author.Books.Contains(bookInfo.FirstOrDefault())
                                     select Author).FirstOrDefault();
                                     */
-                var reviews = (from Review in db.Reviews
-                               where Review.BookId.Equals(someID)
-                               select Review).ToList<Review>();
+                
 
+                /*foreach(var review in reviews)
+                {
+                    bookInfo.Reviews.Add(review);
+                }*/
+                
                                 
               /*  ViewBag.BookTitle = bookInfo.FirstOrDefault().Title;
                 ViewBag.BookDescription = bookInfo.FirstOrDefault().Description;
