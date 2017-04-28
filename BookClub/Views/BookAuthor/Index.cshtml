@@ -10,7 +10,7 @@
 @foreach (var book in Model)
 {
     <div>
-        <div> Book title:  @Html.ActionLink(book.Title, "Details", new { id = book.BookId })  </div>
+        <div> Book title:  @Html.ActionLink(book.Title, "BookDetails", new { id = book.BookId })  </div>
     </div>
 }
 

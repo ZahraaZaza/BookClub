@@ -9,7 +9,7 @@
     <div>Book Title: @Model.Title </div>
     @foreach (var item in Model.Authors)//Foreach is useless since each book only has 1 author
     {
-        <div>Book Author: @item.FirstName @item.LastName </div>
+        <div>Book Author: @Html.ActionLink(item.FirstName + " " + item.LastName, "AuthorDetails", new { id = item.AuthorId })  </div>
     }
     
     <div>Book Description: @Model.Description</div>

@@ -14,14 +14,14 @@ namespace BookClub.Controllers
         {
             using (var db = new BooksAuthorsDB())
             {
-                var listOfBookAuthor = (from Book in db.Books
+                var listOfBook = (from Book in db.Books
                                         orderby Book.BookId
                                         select Book).ToList<Book>(); 
 
-                return View(listOfBookAuthor);
+                return View(listOfBook);
             }
         }
-        public ActionResult Details(int? id = 0)
+        public ActionResult BookDetails(int? id = 0)
         {
             int someID = 0;
 
@@ -36,6 +36,26 @@ namespace BookClub.Controllers
                 bookInfo.Views += 1;
                 db.SaveChanges();
                 return View(bookInfo);
+            }
+        }
+        public ActionResult AuthorDetails(int id)
+        {
+            using (var db = new BooksAuthorsDB())
+            {
+                ICollection<Book> authorBooks = (from Author in db.Authors.Include("Books")
+                                   where Author.AuthorId.Equals(id)
+                                   select Author.Books).FirstOrDefault();
+
+                Author author = (from Author in db.Authors
+                                 where Author.AuthorId.Equals(id)
+                                 select Author).FirstOrDefault();
+                // not sure
+                ViewBag.AuthorName = author.FirstName + " " + author.LastName;
+
+                return View(authorBooks);
+
+
+
             }
         }
     }
