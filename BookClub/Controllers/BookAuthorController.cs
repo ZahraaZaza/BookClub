@@ -53,9 +53,6 @@ namespace BookClub.Controllers
                 ViewBag.AuthorName = author.FirstName + " " + author.LastName;
 
                 return View(authorBooks);
-
-
-
             }
         }
     }
