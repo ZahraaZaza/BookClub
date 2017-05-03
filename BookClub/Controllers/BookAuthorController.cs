@@ -28,14 +28,7 @@ namespace BookClub.Controllers
 
         }
         */
-
-        [Authorize]
-        public ActionResult CreateReview(int bookId)
-        {
-            // POST request?
-        }
-
-
+      
         public ActionResult BookDetails(int? id = 0)
         {
             int someID = 0;

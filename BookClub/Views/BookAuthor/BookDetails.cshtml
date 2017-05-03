@@ -17,10 +17,12 @@
 
 
 <h2> Reviews </h2>
-
+@if (User.Identity.IsAuthenticated)
+{
 <div id="addReview">
-    <div> @Html.ActionLink("Add a review.", "CreateReview", new { bookId = Model.BookId }) </div>
+    <div> @Html.ActionLink("Add a review.", "CreateReview", new { UserName = User.Identity.Name, bookId = Model.BookId }) </div>
 </div>
+}
 
 
 <div id="reviewInfo">

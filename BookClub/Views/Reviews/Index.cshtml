@@ -1,7 +1,25 @@
-﻿
+﻿@model string
 @{
     ViewBag.Title = "Book Club - Reviews";
 }
 
 <h2>Reviews</h2>
 
+<table>
+    <tr>
+        <td> Rating: </td>
+        <td> <input id="ratingInput" type="text" name="rating"></td>
+    </tr>
+    <tr>
+        <td> Review: </td>
+        <td> <textarea id="reviewArea"> </textarea></td>
+    </tr>
+</table>
+
+<div id="reviewButtons">
+    <button type="button">Submit Review</button>
+    <button type="reset"> Clear Review</button>
+    <button type="button"> Cancel Review</button>
+</div>
+
+<div> @Model </div>
