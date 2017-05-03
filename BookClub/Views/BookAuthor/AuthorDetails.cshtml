@@ -1,4 +1,4 @@
-﻿@model ICollection<BookClub.Models.Book>
+﻿@model  ICollection<BookClub.Models.Book>
 @{
     ViewBag.Title = "Author Details";
 }
@@ -6,6 +6,9 @@
 <h2>Author Details</h2>
 
 <div id="authorBooks">
+
+    
+    <div>Books written by </div>
     @foreach (var book in Model)
     {
         <div> Book title: @book.Title</div>

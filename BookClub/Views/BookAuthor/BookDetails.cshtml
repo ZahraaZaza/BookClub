@@ -18,6 +18,11 @@
 
 <h2> Reviews </h2>
 
+<div id="addReview">
+    <div> @Html.ActionLink("Add a review.", "CreateReview", new { bookId = Model.BookId }) </div>
+</div>
+
+
 <div id="reviewInfo">
     @foreach (var item in Model.Reviews)
     {

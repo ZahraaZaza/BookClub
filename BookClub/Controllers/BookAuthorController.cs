@@ -16,11 +16,26 @@ namespace BookClub.Controllers
             {
                 var listOfBook = (from Book in db.Books
                                         orderby Book.BookId
-                                        select Book).ToList<Book>(); 
+                                        select Book).Take(10).ToList(); 
 
                 return View(listOfBook);
             }
         }
+        /*
+         * what will be displayed after authenticated user logs in 
+        public ActionResult Recommend(int? id)
+        {
+
+        }
+        */
+
+        [Authorize]
+        public ActionResult CreateReview(int bookId)
+        {
+            // POST request?
+        }
+
+
         public ActionResult BookDetails(int? id = 0)
         {
             int someID = 0;
@@ -38,6 +53,7 @@ namespace BookClub.Controllers
                 return View(bookInfo);
             }
         }
+
         public ActionResult AuthorDetails(int id)
         {
             using (var db = new BooksAuthorsDB())
@@ -45,12 +61,8 @@ namespace BookClub.Controllers
 
                 ICollection<Book> authorBooks = db.Authors.Find(id).Books;
                 
-                Author author = (from Author in db.Authors
-                                 where Author.AuthorId.Equals(id)
-                                 select Author).FirstOrDefault();
                 // not sure
-                ViewBag.AuthorName = author.FirstName + " " + author.LastName;
-
+ 
 
                 return View(authorBooks);
 
