@@ -42,19 +42,17 @@ namespace BookClub.Controllers
         {
             using (var db = new BooksAuthorsDB())
             {
-                ICollection<Book> authorBooks = (from Author in db.Authors.Include("Books")
-                                   where Author.AuthorId.Equals(id)
-                                   select Author.Books).FirstOrDefault();
 
+                ICollection<Book> authorBooks = db.Authors.Find(id).Books;
+                
                 Author author = (from Author in db.Authors
                                  where Author.AuthorId.Equals(id)
                                  select Author).FirstOrDefault();
                 // not sure
                 ViewBag.AuthorName = author.FirstName + " " + author.LastName;
 
+
                 return View(authorBooks);
-
-
 
             }
         }

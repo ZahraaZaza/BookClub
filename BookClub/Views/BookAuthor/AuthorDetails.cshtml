@@ -1,14 +1,13 @@
 ﻿@model ICollection<BookClub.Models.Book>
 @{
-    ViewBag.Title = "AuthorDetails";
+    ViewBag.Title = "Author Details";
 }
 
 <h2>Author Details</h2>
 
 <div id="authorBooks">
-    <div> List of books by @ViewBag.AuthorName </div>
-            <!-- need to fix this! only displaying first book in list!-->
-        <div> Book title: @Model.FirstOrDefault().Title </div>
-    
-
+    @foreach (var book in Model)
+    {
+        <div> Book title: @book.Title</div>
+    }
 </div>
