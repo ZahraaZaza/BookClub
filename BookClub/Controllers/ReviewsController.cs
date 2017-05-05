@@ -15,7 +15,6 @@ namespace BookClub.Controllers
             return View();
         }
 
-
         [HttpPost]
         [Authorize]
         public ActionResult Create([Bind(Include = "Rating, Content")] Review review, int bookId)

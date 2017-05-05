@@ -13,6 +13,7 @@
     }
 
     <div>Book Description: @Model.Description</div>
+    <div>Average Rating: @ViewBag.AvgRating</div>
 </div>
 
 
@@ -27,9 +28,11 @@
 
 
 <div id="reviewInfo">
-    @foreach (var item in Model.Reviews)
+    
+    @foreach (var item in Model.Reviews.Take(5))
     {
         int rating = 0;
+       
 
         switch (item.Rating)
         {

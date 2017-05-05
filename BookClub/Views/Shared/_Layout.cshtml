@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@ViewBag.Title - My ASP.NET Application</title>
+    <title>@ViewBag.Title</title>
     <link href="~/Content/Site.css" rel="stylesheet" type="text/css" />
     <link href="~/Content/bootstrap.min.css" rel="stylesheet" type="text/css" />
     <script src="~/Scripts/modernizr-2.6.2.js"></script>
@@ -18,13 +18,20 @@
                     <span class="icon-bar"></span>
                 </button>
 
+                            
+
                 @if (!User.Identity.IsAuthenticated)
                 {
                     @Html.ActionLink("Book Club", "Index", "BookAuthor", new { area = "" }, new { @class = "navbar-brand" })
-                    @Html.ActionLink("Log In", "Index", "Account", new { area = "" }, new { @class = "navbar-brand" })
+                    @Html.ActionLink("Log In", "Login", "Account", new { area = "" }, new { @class = "navbar-brand" })
                 }
-                <!-- add the link for the recommend-->
-                @Html.ActionLink("Book Club", "Index", "BookAuthor", new { area = "" }, new { @class = "navbar-brand" })
+
+                @if (User.Identity.IsAuthenticated)
+                {
+                    <!-- add the link for the recommend-->
+                    @Html.ActionLink("Book Club", "Index", "Account", new { area = "" }, new { @class = "navbar-brand" })
+                }
+             
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav"></ul>
