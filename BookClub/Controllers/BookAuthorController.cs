@@ -21,13 +21,6 @@ namespace BookClub.Controllers
                 return View(listOfBook);
             }
         }
-        /*
-         * what will be displayed after authenticated user logs in 
-        public ActionResult Recommend(int? id)
-        {
-
-        }
-        */
       
         public ActionResult BookDetails(int? id = 0)
         {

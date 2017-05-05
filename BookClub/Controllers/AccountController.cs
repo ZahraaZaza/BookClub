@@ -42,5 +42,11 @@ namespace BookClub.Controllers
             return View();
 
         }
+        public ActionResult Index()
+        {
+            
+            //Show a max of 10 books
+            return View();
+        }
     }
 }

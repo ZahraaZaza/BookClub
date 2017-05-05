@@ -243,6 +243,7 @@
     <Content Include="Scripts\jquery-1.10.2.min.map" />
     <Content Include="Views\BookAuthor\BookDetails.cshtml" />
     <Content Include="Views\BookAuthor\AuthorDetails.cshtml" />
+    <Content Include="Views\Account\Index.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
