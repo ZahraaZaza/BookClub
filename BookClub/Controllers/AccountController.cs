@@ -34,17 +34,27 @@ namespace BookClub.Controllers
                         if (user.Password.Equals(userIn.Password))
                             //log into site:
                             FormsAuthentication.RedirectFromLoginPage(userIn.Username, false);
+
+                    //Moved this from outside of the using statement to inside so i could pass the user to the view
+                    //still here: either user not found, or password didn’t match
+                    ViewBag.ReturnUrl = ReturnUrl;
+                    ModelState.AddModelError("", "Invalid user name or password");
+                    return View(user);
                 }
             }
-            //still here: either user not found, or password didn’t match
-            ViewBag.ReturnUrl = ReturnUrl;
-            ModelState.AddModelError("", "Invalid user name or password");
             return View();
 
         }
+        [Authorize]
         public ActionResult Index()
         {
-            
+            using(var db = new BooksAuthorsDB())
+            {
+                //The mio jaya sent us has more information on how to send two things to the view
+                //List<Book> books = (from r in db.Reviews.Include("Books")
+                  //                  where User.Identity.Name == r.UserName
+                    //                select r.)
+            }
             //Show a max of 10 books
             return View();
         }

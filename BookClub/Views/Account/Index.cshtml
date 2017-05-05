@@ -1,7 +1,14 @@
-﻿@model List<BookClub.Models.Book>
+﻿@model BookClub.Models.User
 @{
     ViewBag.Title = "Authenticated Index";
 }
 
 <h2>Index</h2>
-
+<div id="recomBooks">
+    @for (int i = 0; i < 10; i++)
+    {
+        <div>
+           <!-- <div>  Html.ActionLink(model.Title, "BookDetails", new { id = book.BookId })  </div>-->
+        </div>
+    }
+</div>
