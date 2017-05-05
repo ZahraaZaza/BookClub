@@ -15,13 +15,20 @@ namespace BookClub.Controllers
             using (var db = new BooksAuthorsDB())
             {
                 var listOfBook = (from Book in db.Books
-                                        orderby Book.BookId
-                                        select Book).Take(10).ToList(); 
+                                  orderby Book.Views descending
+                                  select Book).Take(10).ToList();
 
                 return View(listOfBook);
             }
         }
-      
+        /*
+         * what will be displayed after authenticated user logs in 
+        public ActionResult Recommend(int? id)
+        {
+
+        }
+        */
+
         public ActionResult BookDetails(int? id = 0)
         {
             int someID = 0;
@@ -33,7 +40,7 @@ namespace BookClub.Controllers
             {
                 Book bookInfo = (from Book in db.Books.Include("Reviews").Include("Authors")
                                  where Book.BookId.Equals(someID)
-                                select Book).FirstOrDefault();
+                                 select Book).FirstOrDefault();
                 bookInfo.Views += 1;
                 db.SaveChanges();
                 return View(bookInfo);
@@ -46,9 +53,9 @@ namespace BookClub.Controllers
             {
 
                 ICollection<Book> authorBooks = db.Authors.Find(id).Books;
-                
+
                 // not sure
- 
+
 
                 return View(authorBooks);
 

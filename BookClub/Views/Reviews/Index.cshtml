@@ -1,14 +1,14 @@
-﻿@model string
+﻿@model BookClub.Models.Review
 @{
-    ViewBag.Title = "Book Club - Reviews";
+    ViewBag.Title = "Book Club - Add Review";
 }
 
 <h2>Reviews</h2>
 
 <table>
     <tr>
-        <td> Rating: </td>
-        <td> <input id="ratingInput" type="text" name="rating"></td>
+        <td> @Html.LabelFor(model => model.Rating, htmlAttributes: new { @class = "control-label col-md-2" }) </td>
+        <td>@Html.EditorFor(model => model.Rating)</td>
     </tr>
     <tr>
         <td> Review: </td>
