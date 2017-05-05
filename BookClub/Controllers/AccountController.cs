@@ -11,7 +11,7 @@ namespace BookClub.Controllers
     public class AccountController : Controller
     {
         // GET: Account
-        public ActionResult Index(string returnUrl)
+        public ActionResult Login(string returnUrl)
         {
             ViewBag.ReturnUrl = returnUrl;
             return View();
@@ -19,7 +19,7 @@ namespace BookClub.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Index([Bind(Include = "UserName, Password")] User userIn, string ReturnUrl)
+        public ActionResult Login([Bind(Include = "UserName, Password")] User userIn, string ReturnUrl)
         {
             if (ModelState.IsValid)
             {
