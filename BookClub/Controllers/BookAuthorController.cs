@@ -84,13 +84,40 @@ namespace BookClub.Controllers
             }
         }
 
-        /*
+        public ActionResult CreateAuthor()
+        {
+         
+            return View();
+        }
+
         [HttpPost]
         [Authorize]
-        public ActionResult AddAuthor([Bind(Include = "FirstName, LastName")] Author author)
+        public ActionResult CreateAuthor([Bind(Include = "FirstName, LastName")] Author author)
         {
+            using (var db = new BooksAuthorsDB())
+            {
+                int authorCount = (from Author in db.Authors
+                                   where (Author.FirstName.Equals(author.FirstName)) && 
+                                   (Author.LastName.Equals(author.LastName))
+                                   select Author).Count();
 
-        }*/
+                if (authorCount > 0)
+                {
+                    // error message
+                    ModelState.AddModelError("", "Oops! Looks like we already have this author.");
+                    return View();
+                }
+                Author a = new Author
+                {
+                    LastName = author.LastName,
+                    FirstName = author.FirstName
+                };
+
+                db.Authors.Add(a);
+                db.SaveChanges();
+            }
+            return View();
+        }
 
         /* [HttpPost]
            [Authorize]

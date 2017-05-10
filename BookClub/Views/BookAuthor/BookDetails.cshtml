@@ -21,7 +21,6 @@
 @if (User.Identity.IsAuthenticated)
 {
     <div id="addReview">
-
         <div> @Html.ActionLink("Add a review?", "Create", "Reviews", new { bookId = Model.BookId }, null) </div>
     </div>
 }
@@ -56,5 +55,6 @@
 
         <div>User: @item.UserName </div>
         <div>Rating: @rating</div>
+        <div>Content: @item.Content</div>
     }
 </div>

@@ -132,16 +132,6 @@
     <Content Include="Content\Site.css" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
-    <Content Include="Models\Books.Context.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>Books.edmx</DependentUpon>
-      <LastGenOutput>Books.Context.cs</LastGenOutput>
-    </Content>
-    <Content Include="Models\Books.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>Books.edmx</DependentUpon>
-      <LastGenOutput>Books.cs</LastGenOutput>
-    </Content>
     <Content Include="Models\BooksAuthors.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>BooksAuthors.edmx</DependentUpon>
@@ -154,13 +144,6 @@
     </Content>
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
-    <EntityDeploy Include="Models\Books.edmx">
-      <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>Books.Designer.cs</LastGenOutput>
-    </EntityDeploy>
-    <Content Include="Models\Books.edmx.diagram">
-      <DependentUpon>Books.edmx</DependentUpon>
-    </Content>
     <EntityDeploy Include="Models\BooksAuthors.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>BooksAuthors.Designer.cs</LastGenOutput>
@@ -194,21 +177,6 @@
     </Compile>
     <Compile Include="Models\Book.cs">
       <DependentUpon>BooksAuthors.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\Books.Context.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Books.Context.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\Books.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Books.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\Books.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Books.edmx</DependentUpon>
     </Compile>
     <Compile Include="Models\BooksAuthors.Context.cs">
       <AutoGen>True</AutoGen>
@@ -250,6 +218,7 @@
     <Content Include="Views\BookAuthor\AuthorDetails.cshtml" />
     <Content Include="Views\Account\Index.cshtml" />
     <Content Include="Views\Reviews\Create.cshtml" />
+    <Content Include="Views\BookAuthor\CreateAuthor.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
