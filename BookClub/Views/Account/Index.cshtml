@@ -1,14 +1,14 @@
-﻿@model BookClub.Models.User
+﻿@model IEnumerable<BookClub.Models.Book>
 @{
     ViewBag.Title = "Authenticated Index";
 }
 
 <h2>Index</h2>
 <div id="recomBooks">
-    @for (int i = 0; i < 10; i++)
+    @foreach (var itm in Model)
     {
         <div>
-           <!-- <div>  Html.ActionLink(model.Title, "BookDetails", new { id = book.BookId })  </div>-->
+             @Html.ActionLink(itm.Title, "BookDetails", new { id = itm.BookId })  
         </div>
     }
 </div>

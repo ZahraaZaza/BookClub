@@ -50,13 +50,50 @@ namespace BookClub.Controllers
         {
             using(var db = new BooksAuthorsDB())
             {
-                //The mio jaya sent us has more information on how to send two things to the view
-                //List<Book> books = (from r in db.Reviews.Include("Books")
-                  //                  where User.Identity.Name == r.UserName
-                    //                select r.)
+                
+                var groupedUserReviews = (from r in db.Reviews
+                                    where User.Identity.Name != r.UserName
+                                    group r by r.UserName into groupedReviews 
+                                    select groupedReviews).ToList();
+
+                var loggedInReviews = (from r in db.Reviews
+                                  where User.Identity.Name == r.UserName
+                                  select r).ToList();
+
+                int? highestRating = 0;
+
+                string bestUser = null; 
+
+                foreach(var user in groupedUserReviews)
+                {
+                    int? temp = 0;
+
+                    foreach(var review in user)
+                    {
+                        int? rating = loggedInReviews.Where(x => x.BookId == review.BookId).FirstOrDefault()?.Rating;
+
+                        if(rating != null)
+                        {
+                            temp += review.Rating * rating;
+                        }
+                    }
+                    if (temp > highestRating) {
+                        highestRating = temp;
+                        bestUser = user.Key;
+                            }
+
+                }
+                var bestBooks = (from b in db.Reviews
+                                where b.UserName == bestUser
+                                && b.Rating >= 0 && b.UserName != User.Identity.Name
+                                select b.Book).Take(10).ToList();
+
+
+                return View(bestBooks);
+                //List<Review> reviews = (from)
             }
             //Show a max of 10 books
-            return View();
+            
         }
     }
 }
