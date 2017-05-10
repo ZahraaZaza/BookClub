@@ -30,6 +30,7 @@ namespace BookClub.Controllers
             using (var db = new BooksAuthorsDB())
             {
                 db.Reviews.Add(rev);
+                db.SaveChanges();
             }
             return View();
         }
