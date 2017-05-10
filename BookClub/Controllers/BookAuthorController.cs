@@ -84,13 +84,13 @@ namespace BookClub.Controllers
             }
         }
 
-
+        /*
         [HttpPost]
         [Authorize]
         public ActionResult AddAuthor([Bind(Include = "FirstName, LastName")] Author author)
         {
 
-        }
+        }*/
 
         /* [HttpPost]
            [Authorize]

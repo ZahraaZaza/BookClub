@@ -1,25 +1,6 @@
-﻿@model BookClub.Models.Review
+﻿
 @{
     ViewBag.Title = "Book Club - Add Review";
 }
 
 <h2>Reviews</h2>
-
-<table>
-    <tr>
-        <td> @Html.LabelFor(model => model.Rating, htmlAttributes: new { @class = "control-label col-md-2" }) </td>
-        <td>@Html.EditorFor(model => model.Rating)</td>
-    </tr>
-    <tr>
-        <td> Review: </td>
-        <td> <textarea id="reviewArea"> </textarea></td>
-    </tr>
-</table>
-
-<div id="reviewButtons">
-    <button type="button">Submit Review</button>
-    <button type="reset"> Clear Review</button>
-    <button type="button"> Cancel Review</button>
-</div>
-
-<div> @Model </div>

@@ -9,7 +9,7 @@ namespace BookClub.Controllers
     public class ReviewsController : Controller
     {
         // GET: Reviews
-        public ActionResult Index(int bookId)
+        public ActionResult Create(int bookId)
         {
             // send users to Create action 
             return View();
