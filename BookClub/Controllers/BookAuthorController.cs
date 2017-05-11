@@ -144,11 +144,20 @@ namespace BookClub.Controllers
             return View();
         }
 
-        /* [HttpPost]
-           [Authorize]
-           public ActionResult AddBook([Bind(Include = "FirstName, LastName")] Author author)
-           {
+        public ActionResult CreateBook()
+        {
+            return View();
+        }
 
-           }*/
+        [HttpPost]
+        [Authorize]
+        public ActionResult CreateBook([Bind(Include = "BookId, Title, Description")] Book book, Author LastNameX, Author LastNameY)
+        {
+            using (var db = new BooksAuthorsDB()) {
+                Author author1 = from author in
+                Author author2 =
+            return View();
+            }
+        }
     }
 }
