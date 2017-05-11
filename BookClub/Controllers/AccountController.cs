@@ -42,15 +42,26 @@ namespace BookClub.Controllers
                     return View(user);
                 }
             }
-            return View();
-
+            return View();      
         }
+
+        /// <summary>
+        /// Gets the Register User view.
+        /// </summary>
+        /// <param name="returnUrl"></param>
+        /// <returns></returns>
         public ActionResult RegisterUser(string returnUrl)
         {
             ViewBag.ReturnUrl = returnUrl;
             return View();
         }
-
+        /// <summary>
+        /// Post method that registers a new user. After a user has filled
+        /// up the form, we get the information to create a new user. 
+        /// </summary>
+        /// <param name="newUser"></param>
+        /// <param name="ReturnUrl"></param>
+        /// <returns></returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult RegisterUser([Bind(Include = "UserName, Password, LastName, FirstName, Email, Country")] User newUser, string ReturnUrl)
@@ -61,12 +72,14 @@ namespace BookClub.Controllers
                 int users = (from u in db.Users
                              where u.Username.Equals(newUser.Username)
                              select u).Count();
+
                 if (users > 0)
                 {
                     ModelState.AddModelError("", "Username already exists!");
                     return View();
                 }
 
+                // creating new user
                 User user = new User
                 {
                     Username = newUser.Username,
@@ -85,6 +98,10 @@ namespace BookClub.Controllers
             }
             return View();
         }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         [Authorize]
         public ActionResult Logout()
         {

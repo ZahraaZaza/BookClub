@@ -24,10 +24,11 @@ namespace BookClub.Controllers
         {
             using (var db = new BooksAuthorsDB())
             {
+                // getting first 10 books based on the views
                 var listOfBooks = (from Book in db.Books
                                    orderby Book.Views descending
                                    select Book).Take(10).ToList();
-
+           
                 return View(listOfBooks);
             }
         }
@@ -43,16 +44,19 @@ namespace BookClub.Controllers
 
             using (var db = new BooksAuthorsDB())
             {
+                // getting the book object that user has chosen
                 Book bookInfo = (from Book in db.Books.Include("Reviews").Include("Authors")
                                  where Book.BookId.Equals(id)
                                  select Book).FirstOrDefault();
 
+                // getting all the reviews of the book
                 ICollection<Review> reviews = db.Books.Find(bookInfo.BookId).Reviews;
 
                 int rating = 0;
                 int sum = 0;
                 int counter = 0;
 
+                // changing review numbers so user can understand
                 foreach (Review r in reviews)
                 {
                     if (r.Rating == -5)
@@ -74,6 +78,7 @@ namespace BookClub.Controllers
                     counter++;
                 }
 
+                // average rating of the book
                 ViewBag.AvgRating = sum / counter;
 
                 bookInfo.Views += 1;
@@ -94,8 +99,8 @@ namespace BookClub.Controllers
             using (var db = new BooksAuthorsDB())
             {
                 ICollection<Book> authorBooks = db.Authors.Find(id).Books;
-                // not sure
                 Author a = db.Authors.Find(id);
+                // getting author name 
                 ViewBag.AuthorName = a.FirstName + " " + a.LastName;
 
                 return View(authorBooks);
@@ -107,12 +112,14 @@ namespace BookClub.Controllers
         /// </summary>
         /// <returns></returns>
         public ActionResult CreateAuthor()
-        {
-         
+        {        
             return View();
         }
+       
         /// <summary>
-        /// 
+        /// This method allows authenticated users to create an 
+        /// author. It adds the new author to the database after 
+        /// making sure it is unique. 
         /// </summary>
         /// <param name="author"></param>
         /// <returns></returns>
@@ -122,8 +129,9 @@ namespace BookClub.Controllers
         {
             using (var db = new BooksAuthorsDB())
             {
+                // getting number of authors that has same name 
                 int authorCount = (from Author in db.Authors
-                                   where (Author.FirstName.Equals(author.FirstName)) && 
+                                   where (Author.FirstName.Equals(author.FirstName)) &&
                                    (Author.LastName.Equals(author.LastName))
                                    select Author).Count();
                 if (authorCount > 0)
