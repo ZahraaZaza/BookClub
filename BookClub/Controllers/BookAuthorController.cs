@@ -152,8 +152,11 @@ namespace BookClub.Controllers
             return View();
         }
 
-        public ActionResult CreateBook()
+        public ActionResult CreateAuthor()
         {
+            ViewBag.AuthorName1 = new SelectList(db.Authors, "LastName", "LastName");
+            ViewBag.AuthorName2 = new SelectList(db.Authors, "LastName", "LastName");
+
             return View();
         }
 
@@ -162,7 +165,7 @@ namespace BookClub.Controllers
         public ActionResult CreateBook([Bind(Include = "BookId, Title, Description")] Book book, Author LastNameX, Author LastNameY)
         {
             using (var db = new BooksAuthorsDB()) {
-                Author author1 = from author in
+                Author author1 = db.Authors 
                 Author author2 =
             return View();
             }
