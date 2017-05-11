@@ -56,8 +56,8 @@ namespace BookClub.Controllers
             return View();
         }
         /// <summary>
-        /// Post method that registers a new user. After a user has filled
-        /// up the form, we get the information to create a new user. 
+        /// This method registers a new user using the information
+        /// that the user inputed in the form.
         /// </summary>
         /// <param name="newUser"></param>
         /// <param name="ReturnUrl"></param>
@@ -99,7 +99,7 @@ namespace BookClub.Controllers
             return View();
         }
         /// <summary>
-        /// 
+        /// Logout method that logs out the authenticated users.
         /// </summary>
         /// <returns></returns>
         [Authorize]
@@ -120,8 +120,10 @@ namespace BookClub.Controllers
                                  where r.UserName.Equals(User.Identity.Name)
                                  select r).Count();
 
-                // if the user has no reviews, it means that they are new 
-                // so we will display the home page 
+                /* if the user has no reviews, it means that they are new 
+                   so we will display the home page since they wont have 
+                   any recommended books 
+                */
                 if (numOfRevs == 0)
                     return RedirectToAction("Index", "BookAuthor");
 

@@ -1,6 +1,8 @@
-﻿body {
+﻿
+body {
     padding-top: 50px;
     padding-bottom: 20px;
+
 }
 
 /* Set padding to keep content from hitting the edges */
@@ -24,4 +26,17 @@ textarea {
 #reviewArea {
     width: 500px;
     height: 300px;
+}
+
+#welcome{
+    text-align: center;
+    font-family: Britannic;
+}
+
+#booksArea {
+    width: 100%;
+    text-align: center;
+    font-family: 'Book Antiqua';
+    font-size: large;
+    margin-top: 2%;
 }

@@ -5,11 +5,11 @@
 }
 
 
-<h2>Books</h2>
+<h2 id="welcome">Welcome to the Book Club</h2>
 
 @foreach (var book in Model)
 {
-    <div>
-        <div>  @Html.ActionLink(book.Title, "BookDetails", new { id = book.BookId })  </div>
+    <div id="booksArea">
+        <div id="book">  @Html.ActionLink(book.Title, "BookDetails", new { id = book.BookId })  </div>
     </div>
 }
