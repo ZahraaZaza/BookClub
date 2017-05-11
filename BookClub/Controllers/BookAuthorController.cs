@@ -161,11 +161,11 @@ namespace BookClub.Controllers
         [Authorize]
         public ActionResult CreateBook([Bind(Include = "BookId, Title, Description")] Book book, Author LastNameX, Author LastNameY)
         {
-            using (var db = new BooksAuthorsDB()) {
-                Author author1 = from author in
-                Author author2 =
+          //  using (var db = new BooksAuthorsDB()) {
+           //     Author author1 = from author in
+            //    Author author2 =
             return View();
-            }
+            
         }
     }
 }
