@@ -219,6 +219,7 @@
     <Content Include="Views\Account\Index.cshtml" />
     <Content Include="Views\Reviews\Create.cshtml" />
     <Content Include="Views\BookAuthor\CreateAuthor.cshtml" />
+    <Content Include="Views\Account\RegisterUser.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

@@ -24,6 +24,7 @@
                 {
                     @Html.ActionLink("Book Club", "Index", "BookAuthor", new { area = "" }, new { @class = "navbar-brand" })
                     @Html.ActionLink("Log In", "Login", "Account", new { area = "" }, new { @class = "navbar-brand" })
+                    @Html.ActionLink("Sign Up", "RegisterUser", "Account", new { area = "" }, new { @class = "navbar-brand" })
                 }
 
                 @if (User.Identity.IsAuthenticated)

@@ -45,6 +45,45 @@ namespace BookClub.Controllers
             return View();
 
         }
+        public ActionResult RegisterUser(string returnUrl)
+        {
+            ViewBag.ReturnUrl = returnUrl;
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult RegisterUser([Bind(Include = "UserName, Password, LastName, FirstName, Email, Country")] User newUser, string ReturnUrl)
+        {
+            using (var db = new BooksAuthorsDB())
+            {
+                // checking to see if username already exists
+                int users = (from u in db.Users
+                             where u.Username.Equals(newUser.Username)
+                             select u).Count();
+                if (users > 0)
+                {
+                    ModelState.AddModelError("", "Username already exists!");
+                    return View();
+                }
+
+                User user = new User
+                {
+                    Username = newUser.Username,
+                    Password = newUser.Password,
+                    LastName = newUser.LastName,
+                    FirstName = newUser.FirstName,
+                    Email = newUser.Email,
+                    Country = newUser.Country
+                };
+
+                ViewBag.ReturnUrl = ReturnUrl;
+                db.Users.Add(user);
+                db.SaveChanges();
+                Login(user, ReturnUrl);
+            }
+            return View();
+        }
         [Authorize]
         public ActionResult Index()
         {
