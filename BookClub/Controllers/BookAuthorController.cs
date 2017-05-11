@@ -7,8 +7,18 @@ using BookClub.Models;
 
 namespace BookClub.Controllers
 {
+    /// <summary>
+    /// This controller takes care of sending the right
+    /// books and authors information to the views.
+    /// </summary>
     public class BookAuthorController : Controller
     {
+        /// <summary>
+        /// We are sending a list of 10 books to the View, which is also the 
+        /// home page. 
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         // GET: BookAuthor
         public ActionResult Index(int? id)
         {
@@ -21,18 +31,20 @@ namespace BookClub.Controllers
                 return View(listOfBooks);
             }
         }
-
-        public ActionResult BookDetails(int? id = 0)
+        /// <summary>
+        /// When a book gets clicked, its id gets passed to this method 
+        /// which sends a book object to the view  
+        /// in order to display the details about that book.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public ActionResult BookDetails(int id)
         {
-            int someID = 0;
-
-            if (id.HasValue)
-                someID = id.Value;
 
             using (var db = new BooksAuthorsDB())
             {
                 Book bookInfo = (from Book in db.Books.Include("Reviews").Include("Authors")
-                                 where Book.BookId.Equals(someID)
+                                 where Book.BookId.Equals(id)
                                  select Book).FirstOrDefault();
 
                 ICollection<Review> reviews = db.Books.Find(bookInfo.BookId).Reviews;
@@ -70,6 +82,13 @@ namespace BookClub.Controllers
             }
         }
 
+        /// <summary>
+        /// In the book details view, a user can click on the author
+        /// in order to get the author's details. This method will get and send
+        /// all the information about an author to the view.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns>View of the author details</returns>
         public ActionResult AuthorDetails(int id)
         {
             using (var db = new BooksAuthorsDB())
@@ -83,13 +102,20 @@ namespace BookClub.Controllers
 
             }
         }
-
+        /// <summary>
+        /// Gets the CreateAuthor view.
+        /// </summary>
+        /// <returns></returns>
         public ActionResult CreateAuthor()
         {
          
             return View();
         }
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="author"></param>
+        /// <returns></returns>
         [HttpPost]
         [Authorize]
         public ActionResult CreateAuthor([Bind(Include = "FirstName, LastName")] Author author)
@@ -100,7 +126,6 @@ namespace BookClub.Controllers
                                    where (Author.FirstName.Equals(author.FirstName)) && 
                                    (Author.LastName.Equals(author.LastName))
                                    select Author).Count();
-
                 if (authorCount > 0)
                 {
                     // error message

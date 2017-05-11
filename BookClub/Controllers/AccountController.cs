@@ -78,6 +78,7 @@ namespace BookClub.Controllers
                 };
 
                 ViewBag.ReturnUrl = ReturnUrl;
+                FormsAuthentication.RedirectFromLoginPage(user.Username, false);
                 db.Users.Add(user);
                 db.SaveChanges();
                 Login(user, ReturnUrl);
@@ -85,11 +86,31 @@ namespace BookClub.Controllers
             return View();
         }
         [Authorize]
+        public ActionResult Logout()
+        {
+            FormsAuthentication.SignOut();
+            return RedirectToAction("Index", "BookAuthor");
+        }
+
+        [Authorize]
         public ActionResult Index()
         {
             using(var db = new BooksAuthorsDB())
             {
-                
+
+                // select the number of reviews that a user has
+                int numOfRevs = (from r in db.Reviews
+                                 where r.UserName.Equals(User.Identity.Name)
+                                 select r).Count();
+
+                // if the user has no reviews, it means that they are new 
+                // so we will display the home page 
+                if (numOfRevs == 0)
+                    return RedirectToAction("Index", "BookAuthor");
+
+
+
+
                 var groupedUserReviews = (from r in db.Reviews
                                     where User.Identity.Name != r.UserName
                                     group r by r.UserName into groupedReviews 
