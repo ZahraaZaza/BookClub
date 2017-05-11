@@ -13,6 +13,7 @@ namespace BookClub.Controllers
     /// </summary>
     public class BookAuthorController : Controller
     {
+        //var db = new BooksAuthorsDB();
         /// <summary>
         /// We are sending a list of 10 books to the View, which is also the 
         /// home page. 
@@ -152,23 +153,103 @@ namespace BookClub.Controllers
             return View();
         }
 
-        public ActionResult CreateAuthor()
+        public ActionResult CreateBook()
         {
-            ViewBag.AuthorName1 = new SelectList(db.Authors, "LastName", "LastName");
-            ViewBag.AuthorName2 = new SelectList(db.Authors, "LastName", "LastName");
+            
+            using (var db = new BooksAuthorsDB())
+            {
 
+                /*ViewBag.AuthorName1 = new SelectList(authors, "LastName", "LastName");
+                ViewBag.AuthorName2 = new SelectList(authors, "LastName", "LastName");*/
+                List<Author> allAuthors = (from a in db.Authors select a).ToList<Author>();
+                var selectList = new List<SelectListItem>();
+                foreach(var author in allAuthors)
+                {
+                    selectList.Add(new SelectListItem
+                    {
+                        Value = author.AuthorId.ToString(),
+                        Text = author.FirstName + " " + author.LastName
+
+                    });
+                }
+                ViewBag.Author1 = selectList;
+                ViewBag.Author2 = selectList;
+
+
+            }
             return View();
         }
+
+        /*protected override void Dispose(bool disposing)
+        {
+            using (var db = new BooksAuthorsDB())
+            {
+                if (disposing)
+                {
+                    db.Dispose();
+                }
+                base.Dispose(disposing);
+            }
+        }*/
 
         [HttpPost]
         [Authorize]
-        public ActionResult CreateBook([Bind(Include = "BookId, Title, Description")] Book book, Author LastNameX, Author LastNameY)
+        public ActionResult CreateBook([Bind(Include = "BookId, Title, Description")] Book book, string Last1Name, string Last2Name)
         {
             using (var db = new BooksAuthorsDB()) {
-                Author author1 = db.Authors 
-                Author author2 =
-            return View();
+                Author author1 = db.Authors.Where(a => a.LastName == Last1Name).FirstOrDefault();
+                Author author2 = db.Authors.Where(a => a.LastName == Last2Name).FirstOrDefault();
+                Book title = db.Books.Where(t => t.Title == book.Title).FirstOrDefault();
+
+                if (title == null)
+                {
+                    Book thisBook = new Book();
+                    thisBook.Title = book.Title;
+                    thisBook.Description = book.Description;
+
+                    thisBook.Authors.Add(author1);
+                    thisBook.Authors.Add(author2);
+                    author1.Books.Add(thisBook);
+                    author2.Books.Add(thisBook);
+
+                    db.Books.Add(thisBook);
+                    db.SaveChanges();
+                    return RedirectToAction("Index");
+                }
+
+                ModelState.AddModelError("", "The book entered is already in the Book Club");
+           
             }
+            return View();
         }
+        /*public ActionResult CreateBook([Bind(Include = "BookId, Title, Description")]
+                    Book book, string author1LastName, string author2LastName)
+        {
+            Author Author1 = db.Authors.Where(x => x.LastName == author1LastName).First();
+            Author Author2 = db.Authors.Where(x => x.LastName == author2LastName).First();
+
+            Book title = db.Books.Where(x => x.Title == book.Title).FirstOrDefault();
+
+            if (title == null)
+            {
+                Book newBook = new Book();
+                newBook.Title = book.Title;
+                newBook.Description = book.Description;
+
+                newBook.Authors.Add(Author1);
+                newBook.Authors.Add(Author2);
+                Author1.Books.Add(newBook);
+                Author2.Books.Add(newBook);
+
+
+                db.Books.Add(newBook);
+                db.SaveChanges();
+                return RedirectToAction("Index");
+            }
+
+
+            ModelState.AddModelError("", "That book is already in the data base please try agian");
+            return View();
+        }*/
     }
 }
