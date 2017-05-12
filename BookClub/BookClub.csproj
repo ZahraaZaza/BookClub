@@ -152,6 +152,7 @@
     <Content Include="Models\BooksAuthors.edmx.diagram">
       <DependentUpon>BooksAuthors.edmx</DependentUpon>
     </Content>
+    <None Include="Properties\PublishProfiles\BookClub.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />

@@ -8,7 +8,7 @@
     @foreach (var itm in Model)
     {
         <div>
-             @Html.ActionLink(itm.Title, "BookDetails", new { id = itm.BookId })  
+             @Html.ActionLink(itm.Title, "BookDetails", "BookAuthor", new { id = itm.BookId },null)  
         </div>
     }
 </div>
