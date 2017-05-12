@@ -153,6 +153,12 @@ namespace BookClub.Controllers
             return View();
         }
 
+        /// <summary>
+        /// This is the GET to create a book.It is responsible
+        /// for sending the select list through a viewbag to the POST
+        /// CreateBook method
+        /// </summary>
+        /// <returns></returns>
         public ActionResult CreateBook()
         {
             
@@ -179,18 +185,11 @@ namespace BookClub.Controllers
             return View();
         }
 
-        /*protected override void Dispose(bool disposing)
-        {
-            using (var db = new BooksAuthorsDB())
-            {
-                if (disposing)
-                {
-                    db.Dispose();
-                }
-                base.Dispose(disposing);
-            }
-        }*/
-
+        /// <summary>
+        /// This is the GET of the create a book action. Allowing 
+        /// a user who is logged in to add a book
+        /// </summary>
+        /// <returns></returns>
         [HttpPost]
         [Authorize]
         public ActionResult CreateBook([Bind(Include = "BookId, Title, Description")] Book book, string author1, string author2)

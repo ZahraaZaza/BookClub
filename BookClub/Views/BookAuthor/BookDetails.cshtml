@@ -7,7 +7,7 @@
 
 <div id="bookInfo">
     <div>Book Title: @Model.Title </div>
-    @foreach (var item in Model.Authors)//Foreach is useless since each book only has 1 author
+    @foreach (var item in Model.Authors)
     {
         <div>Book Author: @Html.ActionLink(item.FirstName + " " + item.LastName, "AuthorDetails", new { id = item.AuthorId })  </div>
     }

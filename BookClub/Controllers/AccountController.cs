@@ -35,8 +35,6 @@ namespace BookClub.Controllers
                             //log into site:
                             FormsAuthentication.RedirectFromLoginPage(userIn.Username, false);
 
-                    //Moved this from outside of the using statement to inside so i could pass the user to the view
-                    //still here: either user not found, or password didn’t match
                     ViewBag.ReturnUrl = ReturnUrl;
                     ModelState.AddModelError("", "Invalid user name or password");
                     return View(user);
@@ -127,9 +125,6 @@ namespace BookClub.Controllers
                 if (numOfRevs == 0)
                     return RedirectToAction("Index", "BookAuthor");
 
-
-
-
                 var groupedUserReviews = (from r in db.Reviews
                                     where User.Identity.Name != r.UserName
                                     group r by r.UserName into groupedReviews 
@@ -169,10 +164,7 @@ namespace BookClub.Controllers
 
 
                 return View(bestBooks);
-                //List<Review> reviews = (from)
-            }
-            //Show a max of 10 books
-            
+            }        
         }
     }
 }
