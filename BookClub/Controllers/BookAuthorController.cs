@@ -159,8 +159,7 @@ namespace BookClub.Controllers
             using (var db = new BooksAuthorsDB())
             {
 
-                /*ViewBag.AuthorName1 = new SelectList(authors, "LastName", "LastName");
-                ViewBag.AuthorName2 = new SelectList(authors, "LastName", "LastName");*/
+
                 List<Author> allAuthors = (from a in db.Authors select a).ToList<Author>();
                 var selectList = new List<SelectListItem>();
                 foreach(var author in allAuthors)
@@ -194,11 +193,13 @@ namespace BookClub.Controllers
 
         [HttpPost]
         [Authorize]
-        public ActionResult CreateBook([Bind(Include = "BookId, Title, Description")] Book book, string Last1Name, string Last2Name)
+        public ActionResult CreateBook([Bind(Include = "BookId, Title, Description")] Book book, string author1, string author2)
         {
             using (var db = new BooksAuthorsDB()) {
-                Author author1 = db.Authors.Where(a => a.LastName == Last1Name).FirstOrDefault();
-                Author author2 = db.Authors.Where(a => a.LastName == Last2Name).FirstOrDefault();
+                int id1 = Int32.Parse(author1);
+                int id2 = Int32.Parse(author2);
+                Author auth1 = db.Authors.Where(a => a.AuthorId == id1).FirstOrDefault();
+                Author auth2 = db.Authors.Where(a => a.AuthorId == id2).FirstOrDefault();
                 Book title = db.Books.Where(t => t.Title == book.Title).FirstOrDefault();
 
                 if (title == null)
@@ -207,10 +208,10 @@ namespace BookClub.Controllers
                     thisBook.Title = book.Title;
                     thisBook.Description = book.Description;
 
-                    thisBook.Authors.Add(author1);
-                    thisBook.Authors.Add(author2);
-                    author1.Books.Add(thisBook);
-                    author2.Books.Add(thisBook);
+                    thisBook.Authors.Add(auth1);
+                    thisBook.Authors.Add(auth2);
+                    auth1.Books.Add(thisBook);
+                    auth2.Books.Add(thisBook);
 
                     db.Books.Add(thisBook);
                     db.SaveChanges();
@@ -222,34 +223,6 @@ namespace BookClub.Controllers
             }
             return View();
         }
-        /*public ActionResult CreateBook([Bind(Include = "BookId, Title, Description")]
-                    Book book, string author1LastName, string author2LastName)
-        {
-            Author Author1 = db.Authors.Where(x => x.LastName == author1LastName).First();
-            Author Author2 = db.Authors.Where(x => x.LastName == author2LastName).First();
-
-            Book title = db.Books.Where(x => x.Title == book.Title).FirstOrDefault();
-
-            if (title == null)
-            {
-                Book newBook = new Book();
-                newBook.Title = book.Title;
-                newBook.Description = book.Description;
-
-                newBook.Authors.Add(Author1);
-                newBook.Authors.Add(Author2);
-                Author1.Books.Add(newBook);
-                Author2.Books.Add(newBook);
-
-
-                db.Books.Add(newBook);
-                db.SaveChanges();
-                return RedirectToAction("Index");
-            }
-
-
-            ModelState.AddModelError("", "That book is already in the data base please try agian");
-            return View();
-        }*/
+        
     }
 }

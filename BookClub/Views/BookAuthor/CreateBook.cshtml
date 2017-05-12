@@ -31,17 +31,26 @@
             </div>
         </div>
 
-
-        @Html.Label("Author1",)
-
-
-
         <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Create" class="btn btn-default" />
+                <div class="col-md-10">
+                    @Html.Label("Author 1")
+                    @Html.DropDownList("Author1", ViewBag.Author1 as List<SelectListItem>, "Select first author", null)
+                </div>
+         </div>
+
+         <div class="form-group">
+              <div class="col-md-10">
+                        @Html.Label("Author 2")
+                        @Html.DropDownList("Author2", ViewBag.Author2 as List<SelectListItem>, "Select second author", null)
+               </div>
+          </div>
+
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" value="Create" class="btn btn-default" />
+                </div>
             </div>
-        </div>
-    </div>
+</div>
 }
 
 <div>
